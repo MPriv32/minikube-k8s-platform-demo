@@ -2,11 +2,11 @@
 
 A production-grade Kubernetes platform deployed locally on Minikube, demonstrating enterprise-level infrastructure patterns, security practices, and observability solutions.
 
-## 🎯 Overview
+## Overview
 
 This repository showcases a comprehensive Kubernetes platform that mirrors production environments, featuring service mesh architecture, GitOps deployment workflows, intelligent autoscaling, and robust monitoring capabilities—all running locally for development and demonstration purposes.
 
-## 🏗️ Architecture Components
+## Architecture Components
 
 - **Service Mesh**: Istio with mutual TLS (mTLS) for secure service-to-service communication
 - **GitOps**: Argo CD for declarative, Git-based deployment management
@@ -16,7 +16,7 @@ This repository showcases a comprehensive Kubernetes platform that mirrors produ
 - **Package Management**: Helm charts for all infrastructure components
 
 
-## 🚀 What This Demonstrates
+## What This Demonstrates
 
 This platform showcases practical experience with:
 - Production-ready Kubernetes architecture patterns
