@@ -25,3 +25,20 @@ This platform showcases practical experience with:
 - Cloud-native monitoring and observability
 - Kubernetes security hardening and compliance
 - Infrastructure automation and orchestration
+
+## Deployment
+
+### Argo CD
+1. Install Argo
+    *kubectl create namespace argocd
+kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml*
+
+2. Access Argo UI
+    - Port-Forward to access UI for local testing
+    *kubectl port-forward svc/argocd-server -n argocd 8080:443*
+    - Access UI in browser via *127.0.0.1:8080*
+    - Login Credentials
+        *username: admin*
+        *password: 
+            - run kubectl get secret argocd-initial-admin-secret -n argocd -o yaml to retrieve base64 value
+            - [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("insert base64 value here"))
