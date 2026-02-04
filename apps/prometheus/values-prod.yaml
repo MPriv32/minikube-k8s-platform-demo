@@ -1,26 +1,141 @@
+# Lightweight Prometheus + Grafana for minikube demos
+
+## Disable heavy monitoring components
+defaultRules:
+  create: true
+  rules:
+    alertmanager: false
+    etcd: false
+    configReloaders: false
+    general: false
+    k8s: false
+    kubeApiserverAvailability: false
+    kubeApiserverSlos: false
+    kubelet: false
+    kubeProxy: false
+    kubePrometheusGeneral: false
+    kubePrometheusNodeRecording: false
+    kubernetesApps: false
+    kubernetesResources: false
+    kubernetesStorage: false
+    kubernetesSystem: false
+    kubeScheduler: false
+    kubeStateMetrics: false
+    network: false
+    node: false
+    nodeExporterAlerting: false
+    nodeExporterRecording: false
+    prometheus: false
+    prometheusOperator: false
+
+## AlertManager - disabled for demo
 alertmanager:
+  enabled: false
   ingress:
     enabled: true
     ingressClassName: nginx
     hosts: [alertmanager.demo.com]
 
+## Disable K8s component monitoring (not needed for demo)
+kubeApiServer:
+  enabled: false
+kubelet:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+coreDns:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeProxy:
+  enabled: false
+
+## Keep these for basic cluster metrics
+kubeStateMetrics:
+  enabled: true
+nodeExporter:
+  enabled: true
+
+## Windows monitoring
+windowsMonitoring:
+  enabled: false
+
+## Grafana - main demo component
 grafana:
+  enabled: true
+  adminPassword: admin  # Change for production!
+  
+  # Resource limits for minikube
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+  
+  # Enable dashboards
+  sidecar:
+    dashboards:
+      enabled: true
+      defaultFolderName: "General"
+    datasources:
+      enabled: true
+  
+  # Ingress for tutorials/production
   ingress:
     enabled: true
     ingressClassName: nginx
     hosts: [grafana.demo.com]
+  
+  # NodePort for easy minikube access (alternative to ingress)
+  service:
+    type: NodePort
+    nodePort: 30080
 
+## Prometheus - lightweight config
 prometheus:
+  enabled: true
+  
+  # Ingress for tutorials/production
   ingress:
     enabled: true
     ingressClassName: nginx
     hosts: [prometheus.demo.com]
+  
+  # NodePort for easy minikube access (alternative to ingress)
+  service:
+    type: NodePort
+    nodePort: 30090
+  
+  prometheusSpec:
+    replicas: 1
+    retention: 2h  # Short retention saves memory
+    
+    # Resource limits for minikube
+    resources:
+      requests:
+        cpu: 200m
+        memory: 400Mi
+      limits:
+        cpu: 500m
+        memory: 800Mi
+    
+    # No persistent storage (not needed for demos)
+    storageSpec: {}
+    
+    # Only scrape enabled ServiceMonitors
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
 
-windowsMonitoring:
-  enabled: false
-
-defaultRules:
-  rules:
-    alertmanager: false
-    etcd: false
-    configReloaders: false
+## Prometheus Operator - minimal resources
+prometheusOperator:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
