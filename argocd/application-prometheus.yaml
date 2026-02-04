@@ -10,9 +10,14 @@ spec:
     repoURL: https://github.com/MPriv32/minikube-k8s-platform-demo.git
     targetRevision: HEAD
     path: apps/prometheus
+    helm:
+      valueFiles:
+        - values.yaml
+        - values-prod.yaml  # env specific args
+
   destination:
     server: https://kubernetes.default.svc
-    namespace: prometheus
+    namespace: monitoring
 
   syncPolicy:
     syncOptions:
