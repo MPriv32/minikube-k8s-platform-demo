@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus-argo-app
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/MPriv32/minikube-k8s-platform-demo.git
+    targetRevision: HEAD
+    path: apps/prometheus
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prometheus
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    # Pulls at 3min intervals
+    automated:
+      selfHeal: true
+      prune: true
