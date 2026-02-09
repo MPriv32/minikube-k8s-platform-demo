@@ -1,7 +1,3 @@
-# Production-Ready Kubernetes Reference Platform
-
-A production-grade Kubernetes platform deployed locally on Minikube- demonstrating enterprise-level infrastructure patterns, security practices, and observability solutions.
-
 ## Overview
 
 This repository showcases a comprehensive Kubernetes platform that mirrors production environments- featuring a secure service mesh architecture (Istio w/ mTLS) , GitOps deployment workflows (ArgoCD), and robust monitoring capabilities (Prometheus & Grafana). All running locally for development and demonstration purposes.
